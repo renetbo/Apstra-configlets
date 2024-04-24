@@ -11,6 +11,7 @@ It is taking care denying any traffic except the following :
   - SSH
   - NETCONF
   - HTTP/HTTPS for Leaf/Spine upgrade via Apstra GUI
+  - GRPC
   - TACACS and RADIUS (keep the needed one)
   - DHCP relay
 
