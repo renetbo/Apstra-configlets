@@ -27,6 +27,9 @@ policy-options {
     prefix-list PR-SNMP {
         <snmp-server-subnets>;
     }
+    prefix-list PR-DNS {
+        apply-path ""system name-server <*>"";
+    }
     prefix-list PR-NTP {
         apply-path "system ntp server <*>";
     }
@@ -113,6 +116,19 @@ firewall {
                     }
                     protocol udp;
                     port ntp;
+                }
+                then {
+                    policer PC-1M;
+                    accept;
+                }
+            }
+            term DNS-ACCEPT {
+                from {
+                    source-prefix-list {
+                        PR-DNS;
+                    }
+                    protocol [tcp udp];
+                    source-port domain;
                 }
                 then {
                     policer PC-1M;
