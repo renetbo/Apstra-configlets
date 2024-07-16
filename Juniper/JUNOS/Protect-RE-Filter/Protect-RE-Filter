@@ -24,6 +24,9 @@ policy-options {
     prefix-list PR-BGP-VRF {
         <VRF-interco-subnets>;
     }
+    prefix-list PR-DNS {
+        apply-path ""system name-server <*>"";
+    }
     prefix-list PR-SNMP {
         <snmp-server-subnets>;
     }
@@ -123,6 +126,19 @@ firewall {
                 from {
                     protocol icmp;
                     icmp-type [ echo-request echo-reply unreachable time-exceeded ];
+                }
+                then {
+                    policer PC-1M;
+                    accept;
+                }
+            }
+            term DNS-ACCEPT {
+                from {
+                    source-prefix-list {
+                        PR-DNS;
+                    }
+                    protocol [tcp udp];
+                    source-port domain;
                 }
                 then {
                     policer PC-1M;
