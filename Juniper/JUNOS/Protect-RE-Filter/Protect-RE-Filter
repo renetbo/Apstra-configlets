@@ -203,6 +203,17 @@ firewall {
                     accept;
                 }
             }
+            term GRPC {
+                from {
+                    source-prefix-list {
+                        PR-APSTRA;
+                    }
+                    protocol tcp;
+                    destination-port 32767;
+                    tcp-established;
+                }
+                then accept;
+            }
             term DHCP-CLIENT {
                 from {
                     source-address 0.0.0.0/32;
