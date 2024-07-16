@@ -197,7 +197,6 @@ firewall {
                     }
                     protocol udp;
                     source-port radius;
-                    tcp-established;
                 }
                 then {
                     policer PC-1M;
