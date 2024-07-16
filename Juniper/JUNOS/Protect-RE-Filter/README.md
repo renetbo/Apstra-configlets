@@ -14,5 +14,6 @@ It is taking care denying any traffic except the following :
   - TACACS and RADIUS (keep the needed one)
   - PIM
   - DHCP relay
+  - GRPC
 
 BE CAREFUL, on QFX5k mainly, the TCAM size is limited and its limit can be reached "easily". If this happens, make sure the FW filter is optimized (i.e. for example, in the associated prefix-list, try to use supernets to limit the number of entries in the TCAM: 1.1.1.0/30 is better than 1.1.1.1/32 + 1.1.1.2/32)
