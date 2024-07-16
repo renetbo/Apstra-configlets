@@ -197,12 +197,22 @@ firewall {
                     }
                     protocol udp;
                     source-port radius;
-                    tcp-established;
                 }
                 then {
                     policer PC-1M;
                     accept;
                 }
+            }
+            term GRPC {
+                from {
+                    source-prefix-list {
+                        PR-APSTRA;
+                    }
+                    protocol tcp;
+                    destination-port 32767;
+                    tcp-established;
+                }
+                then accept;
             }
             term DHCP-CLIENT {
                 from {
