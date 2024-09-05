@@ -159,6 +159,7 @@ firewall {
                 from {
                     source-prefix-list {
                         PR-MGMT-NETWORKS;
+                        PR-APSTRA;
                     }
                     protocol tcp;
                     port [ ssh 830 ];
