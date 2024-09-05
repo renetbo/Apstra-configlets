@@ -67,6 +67,7 @@ firewall {
                 from {
                     source-prefix-list {
                         PR-MGMT-NETWORKS;
+                        PR-APSTRA;
                         PR-BGP-GLOBAL;
                         PR-BGP-VRF;
                     }
@@ -143,6 +144,7 @@ firewall {
                 from {
                     source-prefix-list {
                         PR-MGMT-NETWORKS;
+                        PR-APSTRA;
                     }
                     protocol tcp;
                     port [ ssh 830 ];
