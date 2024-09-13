@@ -228,7 +228,6 @@ firewall {
                     }
                     protocol tcp;
                     destination-port 32767;
-                    tcp-established;
                 }
                 then accept;
             }
