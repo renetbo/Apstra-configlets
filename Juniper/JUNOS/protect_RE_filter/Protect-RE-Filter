@@ -165,6 +165,16 @@ firewall {
                     accept;
                 }
             }
+            term GRPC {
+                from {
+                    source-prefix-list {
+                        PR-APSTRA;
+                    }
+                    protocol tcp;
+                    destination-port 32767;
+                }
+                then accept;
+            }
             term UPGRADE {
                 from {
                     source-prefix-list {
