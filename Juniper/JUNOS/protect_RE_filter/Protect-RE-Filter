@@ -24,6 +24,9 @@ policy-options {
     prefix-list PR-BGP-VRF {
         <VRF-interco-subnets>;
     }
+    prefix-list PR-DNS {
+        apply-path ""system name-server <*>"";
+    }
     prefix-list PR-SNMP {
         <snmp-server-subnets>;
     }
@@ -67,6 +70,7 @@ firewall {
                 from {
                     source-prefix-list {
                         PR-MGMT-NETWORKS;
+                        PR-APSTRA;
                         PR-BGP-GLOBAL;
                         PR-BGP-VRF;
                     }
@@ -129,6 +133,19 @@ firewall {
                     accept;
                 }
             }
+            term DNS-ACCEPT {
+                from {
+                    source-prefix-list {
+                        PR-DNS;
+                    }
+                    protocol [tcp udp];
+                    source-port domain;
+                }
+                then {
+                    policer PC-1M;
+                    accept;
+                }
+            }
             term TRACEROUTE-ACCEPT {
                 from {
                     protocol udp;
@@ -143,6 +160,7 @@ firewall {
                 from {
                     source-prefix-list {
                         PR-MGMT-NETWORKS;
+                        PR-APSTRA;
                     }
                     protocol tcp;
                     port [ ssh 830 ];
@@ -197,26 +215,23 @@ firewall {
                     }
                     protocol udp;
                     source-port radius;
-                    tcp-established;
                 }
                 then {
                     policer PC-1M;
                     accept;
                 }
             }
-            term DHCP-CLIENT {
+            term GRPC {
                 from {
-                    source-address 0.0.0.0/32;
-                    destination-address 255.255.255.255/32;
-                    protocol udp;
-                    source-port [ 67 68 ];
-                    destination-port [ 67 68 ];
+                    source-prefix-list {
+                        PR-APSTRA;
+                    }
+                    protocol tcp;
+                    destination-port 32767;
                 }
-                then {
-                    accept;
-                }
+                then accept;
             }
-            term DHCP-SERVER {
+            term DHCP {
                 from {
                     protocol udp;
                     source-port [ 67 68 ];
