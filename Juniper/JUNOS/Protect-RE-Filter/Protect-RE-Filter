@@ -231,19 +231,7 @@ firewall {
                 }
                 then accept;
             }
-            term DHCP-CLIENT {
-                from {
-                    source-address 0.0.0.0/32;
-                    destination-address 255.255.255.255/32;
-                    protocol udp;
-                    source-port [ 67 68 ];
-                    destination-port [ 67 68 ];
-                }
-                then {
-                    accept;
-                }
-            }
-            term DHCP-SERVER {
+            term DHCP {
                 from {
                     protocol udp;
                     source-port [ 67 68 ];
